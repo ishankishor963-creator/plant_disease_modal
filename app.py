@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+import requests
 
 from recommendations import RECOMMENDATIONS
 
@@ -37,6 +38,35 @@ def load_model():
 
 model = load_model()
 
+
+def get_weather(city_name, api_key):
+    """Fetch current weather for a city using OpenWeatherMap. Returns dict or None on failure."""
+    url = "https://api.openweathermap.org/data/2.5/weather"
+    params = {"q": city_name, "appid": api_key, "units": "metric"}
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        if response.status_code == 200:
+            return response.json()
+        return None
+    except requests.exceptions.RequestException:
+        return None
+
+
+def get_irrigation_tip(weather_data):
+    """Simple rule-based irrigation advice based on current conditions."""
+    condition = weather_data["weather"][0]["main"].lower()
+    temp = weather_data["main"]["temp"]
+    humidity = weather_data["main"]["humidity"]
+
+    if "rain" in condition or "drizzle" in condition or "thunderstorm" in condition:
+        return "🌧️ Rain detected — delay watering to avoid overwatering and root issues."
+    elif temp > 32 and humidity < 40:
+        return "☀️ Hot and dry conditions — consider watering soon, ideally early morning or evening to reduce evaporation."
+    elif humidity > 80:
+        return "💧 High humidity — go easy on watering, and monitor for fungal disease risk (many crop diseases spread faster in humid conditions)."
+    else:
+        return "🌤️ Conditions look moderate — water as per your crop's normal schedule."
+
 uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -70,3 +100,21 @@ if uploaded_file is not None:
         st.write(info["description"])
         st.subheader("Recommended action")
         st.write(info["treatment"])
+
+st.markdown("---")
+st.subheader("🌦️ Irrigation Tip")
+city = st.text_input("Enter your city/location for a weather-based irrigation tip")
+
+if city:
+    api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
+    if not api_key:
+        st.info("Weather feature not configured — add an OpenWeatherMap API key in app secrets to enable this.")
+    else:
+        weather_data = get_weather(city, api_key)
+        if weather_data:
+            temp = weather_data["main"]["temp"]
+            condition = weather_data["weather"][0]["description"].title()
+            st.write(f"**{city}:** {condition}, {temp}°C")
+            st.write(get_irrigation_tip(weather_data))
+        else:
+            st.warning("Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.")
