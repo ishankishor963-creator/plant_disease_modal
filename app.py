@@ -48,10 +48,181 @@ CLASS_NAMES = [
     "Tomato___healthy",
 ]
 
-st.set_page_config(page_title="Smart Farming Assistant", page_icon="🌱", layout="centered")
+SUPPORTED_CROPS = "apple, blueberry, cherry, corn, grape, orange, peach, pepper, potato, raspberry, soybean, squash, strawberry, tomato"
 
-st.title("🌱 Smart Farming Assistant")
-st.write("Upload a photo of a crop leaf (tomato, potato, or pepper) to detect disease and get treatment advice.")
+st.set_page_config(page_title="Agro Edge", page_icon="🌱", layout="centered")
+
+# ---------------------------------------------------------------------------
+# Design system: fonts, colors, and component styling
+# ---------------------------------------------------------------------------
+st.markdown("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --color-bg: #FAF9F5;
+    --color-surface: #FFFFFF;
+    --color-primary: #2D5A3D;
+    --color-primary-dark: #1B3B27;
+    --color-accent: #C9A227;
+    --color-soil: #6B4423;
+    --color-text: #1F2421;
+    --color-text-muted: #5B645D;
+    --color-danger: #B3261E;
+    --color-border: #E4E0D4;
+}
+
+.stApp { background-color: var(--color-bg); }
+body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--color-text); }
+h1, h2, h3 { font-family: 'Fraunces', serif; }
+
+/* Hero banner */
+.hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: 16px;
+    padding: 2.2rem 2rem;
+    margin-bottom: 1.8rem;
+    color: #F5F3EA;
+    position: relative;
+}
+.hero-team {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #D9E4DB;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+}
+.hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+}
+.hero h1 {
+    font-size: 2.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #FFFFFF;
+}
+.hero p {
+    font-size: 0.98rem;
+    color: #D9E4DB;
+    margin: 0;
+    max-width: 34rem;
+}
+
+/* Cards */
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.4rem;
+}
+.eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-soil);
+    margin-bottom: 0.4rem;
+}
+.result-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin: 0 0 1rem 0;
+}
+
+/* Confidence gauge */
+.gauge-wrap { margin-bottom: 1.2rem; }
+.gauge-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+}
+.gauge-value { font-weight: 600; color: var(--color-text); }
+.gauge-track {
+    width: 100%;
+    height: 10px;
+    background: #EFEBDD;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.gauge-fill {
+    height: 100%;
+    border-radius: 6px;
+}
+
+/* Recommendation grid */
+.rec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 0.4rem;
+}
+@media (max-width: 640px) {
+    .rec-grid { grid-template-columns: 1fr; }
+}
+.rec-box {
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    background: #F5F3EA;
+    border-left: 3px solid var(--color-primary);
+}
+.rec-box.treatment { border-left-color: var(--color-accent); }
+.rec-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+.rec-box p { margin: 0; font-size: 0.93rem; line-height: 1.5; }
+
+/* Not-a-supported-crop banner */
+.unrecognized {
+    border-left: 3px solid var(--color-danger);
+    background: #FBEDEB;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: 0.92rem;
+}
+
+[data-testid="stFileUploader"] section {
+    border: 2px dashed var(--color-soil);
+    border-radius: 12px;
+    background: #FFFFFF;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
+# Hero
+# ---------------------------------------------------------------------------
+st.markdown("""
+<div class="hero">
+    <div class="hero-team">Team Cyberpunk</div>
+    <div class="hero-eyebrow">Field Diagnostics</div>
+    <h1>🌱 Agro Edge</h1>
+    <p>Upload a photo of a crop leaf to detect disease and get treatment advice — plus a weather-based irrigation tip for your location.</p>
+</div>
+""", unsafe_allow_html=True)
 
 
 @st.cache_resource
@@ -90,6 +261,42 @@ def get_irrigation_tip(weather_data):
     else:
         return "🌤️ Conditions look moderate — water as per your crop's normal schedule."
 
+
+def gauge_color(pct):
+    if pct >= 85:
+        return "#2D5A3D"  # confident — primary green
+    elif pct >= 70:
+        return "#C9A227"  # moderate — accent gold
+    else:
+        return "#B3261E"  # low — danger red
+
+
+_, popover_col = st.columns([3, 1])
+with popover_col:
+    with st.popover("🌦️ Irrigation Tip", use_container_width=True):
+        st.markdown('<div class="eyebrow">Field Conditions</div>', unsafe_allow_html=True)
+        city = st.text_input("Place name", placeholder="Enter your city/location")
+
+        if city:
+            api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
+            if not api_key:
+                st.info("Weather feature not configured — add an OpenWeatherMap API key in app secrets to enable this.")
+            else:
+                weather_data = get_weather(city, api_key)
+                if weather_data:
+                    temp = weather_data["main"]["temp"]
+                    condition = weather_data["weather"][0]["description"].title()
+                    tip = get_irrigation_tip(weather_data)
+                    st.markdown(f"""
+                    <div style="margin-top:0.6rem;">
+                        <p style="margin:0 0 0.4rem 0; font-weight:600;">{city} — {condition}, {temp}°C</p>
+                        <p style="margin:0; font-size:0.92rem;">{tip}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.warning("Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.")
+
+
 uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -107,41 +314,53 @@ if uploaded_file is not None:
         predicted_class = CLASS_NAMES[predicted_index]
         confidence = 100 * np.max(predictions[0])
 
-    st.subheader("Result")
-    # Make the class name a bit more readable
     display_name = predicted_class.replace("___", " - ").replace("__", " ").replace("_", " ")
 
     if confidence < 70:
-        st.error("This doesn't look like any of the 14 supported crops (apple, blueberry, cherry, corn, grape, orange, peach, pepper, potato, raspberry, soybean, squash, strawberry, tomato). Try a photo of one of these crops for a reliable result.")
+        st.markdown(f"""
+        <div class="card">
+            <div class="eyebrow">Diagnosis</div>
+            <div class="unrecognized">
+                This doesn't look like any of the 14 supported crops ({SUPPORTED_CROPS}).
+                Try a photo of one of these crops for a reliable result.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.write(f"**Prediction:** {display_name}")
-        st.write(f"**Confidence:** {confidence:.1f}%")
+        color = gauge_color(confidence)
+        confidence_note = "" if confidence >= 85 else '<p style="margin-top:0.8rem; font-size:0.86rem; color:var(--color-text-muted);">Confidence is moderate — a clearer, well-lit photo of a single leaf may improve accuracy.</p>'
 
-        if confidence < 85:
-            st.warning("Confidence is moderate — consider taking a clearer, well-lit photo of a single leaf for a more reliable result.")
+        st.markdown(f"""
+        <div class="card">
+            <div class="eyebrow">Diagnosis</div>
+            <div class="result-title">{display_name}</div>
+            <div class="gauge-wrap">
+                <div class="gauge-label">
+                    <span>Confidence</span>
+                    <span class="gauge-value">{confidence:.1f}%</span>
+                </div>
+                <div class="gauge-track">
+                    <div class="gauge-fill" style="width:{confidence:.1f}%; background:{color};"></div>
+                </div>
+            </div>
+            {confidence_note}
+        </div>
+        """, unsafe_allow_html=True)
 
         info = RECOMMENDATIONS.get(predicted_class)
         if info:
-            st.markdown("---")
-            st.subheader("What this means")
-            st.write(info["description"])
-            st.subheader("Recommended action")
-            st.write(info["treatment"])
-
-st.markdown("---")
-st.subheader("🌦️ Irrigation Tip")
-city = st.text_input("Enter your city/location for a weather-based irrigation tip")
-
-if city:
-    api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
-    if not api_key:
-        st.info("Weather feature not configured — add an OpenWeatherMap API key in app secrets to enable this.")
-    else:
-        weather_data = get_weather(city, api_key)
-        if weather_data:
-            temp = weather_data["main"]["temp"]
-            condition = weather_data["weather"][0]["description"].title()
-            st.write(f"**{city}:** {condition}, {temp}°C")
-            st.write(get_irrigation_tip(weather_data))
-        else:
-            st.warning("Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.")
+            st.markdown(f"""
+            <div class="card">
+                <div class="eyebrow">Treatment Plan</div>
+                <div class="rec-grid">
+                    <div class="rec-box">
+                        <h4>What This Means</h4>
+                        <p>{info["description"]}</p>
+                    </div>
+                    <div class="rec-box treatment">
+                        <h4>Recommended Action</h4>
+                        <p>{info["treatment"]}</p>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
