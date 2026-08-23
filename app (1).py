@@ -133,14 +133,14 @@ h1, h2, h3 { font-family: 'Fraunces', serif; }
     font-size: 0.7rem;
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: var(--color-soil);
+    color: var(--color-soil) !important;
     margin-bottom: 0.4rem;
 }
 .result-title {
     font-family: 'Fraunces', serif;
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--color-primary-dark);
+    color: var(--color-primary-dark) !important;
     margin: 0 0 1rem 0;
 }
 
@@ -189,11 +189,16 @@ h1, h2, h3 { font-family: 'Fraunces', serif; }
     font-size: 0.72rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted) !important;
     margin: 0 0 0.5rem 0;
     font-weight: 600;
 }
-.rec-box p { margin: 0; font-size: 0.93rem; line-height: 1.5; }
+.rec-box p {
+    margin: 0;
+    font-size: 0.93rem;
+    line-height: 1.5;
+    color: var(--color-text) !important;
+}
 
 /* Not-a-supported-crop banner */
 .unrecognized {
