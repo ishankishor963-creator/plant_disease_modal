@@ -2,3 +2,5 @@ streamlit
 tensorflow==2.15.0
 pillow
 numpy
+requests
+deep-translator
