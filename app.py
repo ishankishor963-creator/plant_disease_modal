@@ -111,13 +111,13 @@ if uploaded_file is not None:
     # Make the class name a bit more readable
     display_name = predicted_class.replace("___", " - ").replace("__", " ").replace("_", " ")
 
-    if confidence < 40:
+    if confidence < 70:
         st.error("This doesn't look like any of the 14 supported crops (apple, blueberry, cherry, corn, grape, orange, peach, pepper, potato, raspberry, soybean, squash, strawberry, tomato). Try a photo of one of these crops for a reliable result.")
     else:
         st.write(f"**Prediction:** {display_name}")
         st.write(f"**Confidence:** {confidence:.1f}%")
 
-        if confidence < 60:
+        if confidence < 85:
             st.warning("Confidence is moderate — consider taking a clearer, well-lit photo of a single leaf for a more reliable result.")
 
         info = RECOMMENDATIONS.get(predicted_class)
