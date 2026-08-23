@@ -56,7 +56,7 @@ st.write("Upload a photo of a crop leaf (tomato, potato, or pepper) to detect di
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("plant_model_v2.keras")
+    return tf.keras.models.load_model("plant_model_v3.keras")
 
 
 model = load_model()
