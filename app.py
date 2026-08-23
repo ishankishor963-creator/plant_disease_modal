@@ -232,7 +232,7 @@ st.markdown("""
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("plant_model_v3.keras")
+    return tf.keras.models.load_model("plant_model_v4.keras")
 
 
 model = load_model()
