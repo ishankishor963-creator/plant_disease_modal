@@ -4,6 +4,7 @@ from PIL import Image
 import tensorflow as tf
 import requests
 import time
+import random
 from deep_translator import GoogleTranslator
 
 from recommendations import RECOMMENDATIONS
@@ -67,14 +68,15 @@ UI_STRINGS = {
     "en": {
         "eyebrow_system": "// Field Diagnostics System",
         "hero_desc": "Upload a photo of a crop leaf to detect disease and get treatment advice — plus a weather-based irrigation tip for your location.",
+        "location_heading": "📍 Your Location (for weather theme & irrigation tip)",
+        "location_placeholder": "Enter your city/location",
+        "enter_location_hint": "Enter your location above to see the weather-based irrigation tip and theme.",
         "soil_button": "🌱 Soil Moisture",
         "soil_eyebrow": "Live Sensor Feed",
         "moisture_label": "Moisture Level",
         "soil_error": "Couldn't fetch soil moisture data — check the sensor and ThingSpeak connection.",
         "weather_button": "🌦️ Irrigation Tip",
         "weather_eyebrow": "Field Conditions",
-        "place_label": "Place name",
-        "place_placeholder": "Enter your city/location",
         "weather_not_configured": "Weather feature not configured — add an OpenWeatherMap API key in app secrets to enable this.",
         "weather_error": "Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.",
         "upload_label": "Upload a leaf image",
@@ -97,14 +99,15 @@ UI_STRINGS = {
     "hi": {
         "eyebrow_system": "// फील्ड डायग्नोस्टिक्स सिस्टम",
         "hero_desc": "रोग की पहचान करने और उपचार सलाह पाने के लिए फसल की पत्ती की फोटो अपलोड करें — साथ ही आपके स्थान के लिए मौसम आधारित सिंचाई सुझाव भी।",
+        "location_heading": "📍 आपका स्थान (मौसम थीम और सिंचाई सुझाव के लिए)",
+        "location_placeholder": "अपना शहर/स्थान दर्ज करें",
+        "enter_location_hint": "मौसम आधारित सिंचाई सुझाव और थीम देखने के लिए ऊपर अपना स्थान दर्ज करें।",
         "soil_button": "🌱 मिट्टी की नमी",
         "soil_eyebrow": "लाइव सेंसर फीड",
         "moisture_label": "नमी स्तर",
         "soil_error": "मिट्टी की नमी का डेटा नहीं मिल सका — सेंसर और थिंगस्पीक कनेक्शन जांचें।",
         "weather_button": "🌦️ सिंचाई सुझाव",
         "weather_eyebrow": "क्षेत्र की स्थिति",
-        "place_label": "स्थान का नाम",
-        "place_placeholder": "अपना शहर/स्थान दर्ज करें",
         "weather_not_configured": "मौसम सुविधा कॉन्फ़िगर नहीं है — इसे सक्षम करने के लिए ऐप सीक्रेट्स में OpenWeatherMap API कुंजी जोड़ें।",
         "weather_error": "उस स्थान का मौसम नहीं मिल सका — वर्तनी जांचें या किसी नज़दीकी बड़े शहर का नाम आज़माएं।",
         "upload_label": "पत्ती की फोटो अपलोड करें",
@@ -127,14 +130,15 @@ UI_STRINGS = {
     "ml": {
         "eyebrow_system": "// ഫീൽഡ് ഡയഗ്നോസ്റ്റിക്സ് സിസ്റ്റം",
         "hero_desc": "രോഗം കണ്ടെത്താനും ചികിത്സാ നിർദ്ദേശം ലഭിക്കാനും വിളയുടെ ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക — കൂടാതെ നിങ്ങളുടെ സ്ഥലത്തിനുള്ള കാലാവസ്ഥാധിഷ്ഠിത ജലസേചന നിർദ്ദേശവും.",
+        "location_heading": "📍 നിങ്ങളുടെ സ്ഥലം (കാലാവസ്ഥാ തീം & ജലസേചന നിർദ്ദേശത്തിന്)",
+        "location_placeholder": "നിങ്ങളുടെ നഗരം/സ്ഥലം നൽകുക",
+        "enter_location_hint": "കാലാവസ്ഥാധിഷ്ഠിത ജലസേചന നിർദ്ദേശവും തീമും കാണാൻ മുകളിൽ നിങ്ങളുടെ സ്ഥലം നൽകുക.",
         "soil_button": "🌱 മണ്ണിലെ ഈർപ്പം",
         "soil_eyebrow": "ലൈവ് സെൻസർ ഫീഡ്",
         "moisture_label": "ഈർപ്പ നില",
         "soil_error": "മണ്ണിലെ ഈർപ്പ ഡാറ്റ ലഭിച്ചില്ല — സെൻസറും ThingSpeak കണക്ഷനും പരിശോധിക്കുക.",
         "weather_button": "🌦️ ജലസേചന നിർദ്ദേശം",
         "weather_eyebrow": "സ്ഥല സാഹചര്യങ്ങൾ",
-        "place_label": "സ്ഥലത്തിന്റെ പേര്",
-        "place_placeholder": "നിങ്ങളുടെ നഗരം/സ്ഥലം നൽകുക",
         "weather_not_configured": "കാലാവസ്ഥാ സവിശേഷത കോൺഫിഗർ ചെയ്തിട്ടില്ല — ഇത് സജീവമാക്കാൻ ആപ്പ് സീക്രട്ടുകളിൽ OpenWeatherMap API കീ ചേർക്കുക.",
         "weather_error": "ആ സ്ഥലത്തെ കാലാവസ്ഥ ലഭിച്ചില്ല — അക്ഷരവിന്യാസം പരിശോധിക്കുക അല്ലെങ്കിൽ അടുത്തുള്ള വലിയ നഗരത്തിന്റെ പേര് ശ്രമിക്കുക.",
         "upload_label": "ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
@@ -157,14 +161,15 @@ UI_STRINGS = {
     "kn": {
         "eyebrow_system": "// ಫೀಲ್ಡ್ ಡಯಾಗ್ನೋಸ್ಟಿಕ್ಸ್ ಸಿಸ್ಟಮ್",
         "hero_desc": "ರೋಗ ಪತ್ತೆ ಮಾಡಲು ಮತ್ತು ಚಿಕಿತ್ಸಾ ಸಲಹೆ ಪಡೆಯಲು ಬೆಳೆಯ ಎಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ — ಜೊತೆಗೆ ನಿಮ್ಮ ಸ್ಥಳಕ್ಕೆ ಹವಾಮಾನ ಆಧಾರಿತ ನೀರಾವರಿ ಸಲಹೆ.",
+        "location_heading": "📍 ನಿಮ್ಮ ಸ್ಥಳ (ಹವಾಮಾನ ಥೀಮ್ ಮತ್ತು ನೀರಾವರಿ ಸಲಹೆಗಾಗಿ)",
+        "location_placeholder": "ನಿಮ್ಮ ನಗರ/ಸ್ಥಳ ನಮೂದಿಸಿ",
+        "enter_location_hint": "ಹವಾಮಾನ ಆಧಾರಿತ ನೀರಾವರಿ ಸಲಹೆ ಮತ್ತು ಥೀಮ್ ನೋಡಲು ಮೇಲೆ ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ನಮೂದಿಸಿ.",
         "soil_button": "🌱 ಮಣ್ಣಿನ ತೇವಾಂಶ",
         "soil_eyebrow": "ಲೈವ್ ಸೆನ್ಸಾರ್ ಫೀಡ್",
         "moisture_label": "ತೇವಾಂಶ ಮಟ್ಟ",
         "soil_error": "ಮಣ್ಣಿನ ತೇವಾಂಶ ಡೇಟಾ ಸಿಗಲಿಲ್ಲ — ಸೆನ್ಸಾರ್ ಮತ್ತು ThingSpeak ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ.",
         "weather_button": "🌦️ ನೀರಾವರಿ ಸಲಹೆ",
         "weather_eyebrow": "ಕ್ಷೇತ್ರ ಪರಿಸ್ಥಿತಿಗಳು",
-        "place_label": "ಸ್ಥಳದ ಹೆಸರು",
-        "place_placeholder": "ನಿಮ್ಮ ನಗರ/ಸ್ಥಳ ನಮೂದಿಸಿ",
         "weather_not_configured": "ಹವಾಮಾನ ವೈಶಿಷ್ಟ್ಯ ಕಾನ್ಫಿಗರ್ ಆಗಿಲ್ಲ — ಇದನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಆ್ಯಪ್ ಸೀಕ್ರೆಟ್ಸ್‌ನಲ್ಲಿ OpenWeatherMap API ಕೀ ಸೇರಿಸಿ.",
         "weather_error": "ಆ ಸ್ಥಳದ ಹವಾಮಾನ ಸಿಗಲಿಲ್ಲ — ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.",
         "upload_label": "ಎಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
@@ -187,14 +192,15 @@ UI_STRINGS = {
     "ta": {
         "eyebrow_system": "// களக் கண்டறிதல் அமைப்பு",
         "hero_desc": "நோயைக் கண்டறிந்து சிகிச்சை ஆலோசனை பெற பயிர் இலையின் புகைப்படத்தை பதிவேற்றவும் — மேலும் உங்கள் இடத்திற்கான வானிலை அடிப்படையிலான பாசன ஆலோசனையும்.",
+        "location_heading": "📍 உங்கள் இடம் (வானிலை தீம் & பாசன ஆலோசனைக்கு)",
+        "location_placeholder": "உங்கள் நகரம்/இடத்தை உள்ளிடவும்",
+        "enter_location_hint": "வானிலை அடிப்படையிலான பாசன ஆலோசனையையும் தீமையையும் காண மேலே உங்கள் இடத்தை உள்ளிடவும்.",
         "soil_button": "🌱 மண் ஈரப்பதம்",
         "soil_eyebrow": "நேரடி சென்சார் தரவு",
         "moisture_label": "ஈரப்பத நிலை",
         "soil_error": "மண் ஈரப்பத தரவு கிடைக்கவில்லை — சென்சார் மற்றும் ThingSpeak இணைப்பை சரிபார்க்கவும்.",
         "weather_button": "🌦️ பாசன ஆலோசனை",
         "weather_eyebrow": "வயல் நிலைமைகள்",
-        "place_label": "இடத்தின் பெயர்",
-        "place_placeholder": "உங்கள் நகரம்/இடத்தை உள்ளிடவும்",
         "weather_not_configured": "வானிலை அம்சம் கட்டமைக்கப்படவில்லை — இதை இயக்க ஆப் சீக்ரெட்டுகளில் OpenWeatherMap API கீயைச் சேர்க்கவும்.",
         "weather_error": "அந்த இடத்திற்கான வானிலை கிடைக்கவில்லை — எழுத்துப்பிழையை சரிபார்க்கவும் அல்லது அருகிலுள்ள பெரிய நகரத்தின் பெயரை முயற்சிக்கவும்.",
         "upload_label": "இலையின் புகைப்படத்தை பதிவேற்றவும்",
@@ -260,6 +266,7 @@ st.markdown("""
         linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
     background-size: 34px 34px;
+    transition: background-color 0.8s ease;
 }
 body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--text); }
 h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
@@ -503,6 +510,14 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
     letter-spacing: 0.06em !important;
 }
 
+/* Location input label */
+.loc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+}
+
 /* Footer */
 .sys-footer {
     font-family: 'IBM Plex Mono', monospace;
@@ -518,36 +533,10 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------------------------------------------------------------------
-# Language selector
-# ---------------------------------------------------------------------------
-lang_col, _ = st.columns([1, 2.5])
-with lang_col:
-    selected_lang_name = st.selectbox(
-        "Language", list(LANGUAGES.keys()), label_visibility="collapsed"
-    )
-lang = LANGUAGES[selected_lang_name]
-T = UI_STRINGS[lang]
-
-# ---------------------------------------------------------------------------
-# Hero
-# ---------------------------------------------------------------------------
-st.markdown(f"""
-<div class="hero">
-    <div class="hero-team">Team Cyberpunk</div>
-    <div class="hero-eyebrow">{T['eyebrow_system']}</div>
-    <h1>🌱 Agro Edge</h1>
-    <p>{T['hero_desc']}</p>
-</div>
-""", unsafe_allow_html=True)
-
 
 @st.cache_resource
 def load_model():
     return tf.keras.models.load_model("plant_model_v4.keras")
-
-
-model = load_model()
 
 
 def get_weather(city_name, api_key):
@@ -605,6 +594,177 @@ def gauge_color(pct):
         return "#FF6B5C"  # low — danger red
 
 
+def get_weather_theme(condition_main):
+    """Map an OpenWeatherMap 'main' condition to a color palette + background effect."""
+    c = (condition_main or "").lower()
+    if c in ("rain", "drizzle"):
+        return {"bg": "#0A1620", "surface": "#101E29", "surface2": "#16283688",
+                "accent": "#4FC3F7", "accent2": "#29B6F6", "glow": "rgba(79,195,247,0.28)",
+                "effect": "rain"}
+    if c == "thunderstorm":
+        return {"bg": "#0A0A14", "surface": "#14141F", "surface2": "#1C1C2A",
+                "accent": "#B39DDB", "accent2": "#7E57C2", "glow": "rgba(126,87,194,0.35)",
+                "effect": "thunder"}
+    if c == "snow":
+        return {"bg": "#0E1618", "surface": "#161F22", "surface2": "#1E2A2E",
+                "accent": "#E0F7FA", "accent2": "#80DEEA", "glow": "rgba(224,247,250,0.25)",
+                "effect": "snow"}
+    if c == "clear":
+        return {"bg": "#140F06", "surface": "#1D160A", "surface2": "#271D0D",
+                "accent": "#FFB74D", "accent2": "#FFD54F", "glow": "rgba(255,183,77,0.32)",
+                "effect": "sun"}
+    if c == "clouds":
+        return {"bg": "#0D0F10", "surface": "#15181A", "surface2": "#1D2124",
+                "accent": "#B0BEC5", "accent2": "#90A4AE", "glow": "rgba(176,190,197,0.2)",
+                "effect": "clouds"}
+    if c in ("mist", "fog", "haze", "smoke"):
+        return {"bg": "#0F1210", "surface": "#171B18", "surface2": "#1F2620",
+                "accent": "#CFD8DC", "accent2": "#B0BEC5", "glow": "rgba(207,216,220,0.18)",
+                "effect": "fog"}
+    return None
+
+
+def render_weather_theme(theme):
+    """Override root CSS variables and add an animated background effect matching the weather."""
+    if not theme:
+        return
+
+    st.markdown(f"""
+    <style>
+    :root {{
+        --bg: {theme['bg']};
+        --surface: {theme['surface']};
+        --surface-2: {theme['surface2']};
+        --accent: {theme['accent']};
+        --accent-2: {theme['accent2']};
+        --glow: {theme['glow']};
+    }}
+    </style>
+    """, unsafe_allow_html=True)
+
+    effect = theme["effect"]
+
+    if effect in ("rain", "thunder"):
+        drops = ""
+        for _ in range(30):
+            left = random.uniform(0, 100)
+            delay = random.uniform(0, 2)
+            duration = random.uniform(0.6, 1.3)
+            height = random.uniform(40, 80)
+            drops += (f'<div class="raindrop" style="left:{left:.1f}%; height:{height:.0f}px; '
+                      f'animation-delay:{delay:.2f}s; animation-duration:{duration:.2f}s;"></div>')
+        flash_html = '<div class="lightning-flash"></div>' if effect == "thunder" else ""
+        st.markdown(f"""
+        <style>
+        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
+            overflow:hidden; pointer-events:none; z-index:-1; }}
+        .raindrop {{ position:absolute; top:-10%; width:1px;
+            background:linear-gradient(to bottom, transparent, {theme['accent']});
+            animation-name: rainFall; animation-timing-function: linear;
+            animation-iteration-count: infinite; opacity:0.55; }}
+        @keyframes rainFall {{ from {{ transform: translateY(-10vh); }} to {{ transform: translateY(110vh); }} }}
+        .lightning-flash {{ position:fixed; top:0; left:0; width:100%; height:100%;
+            background:#fff; opacity:0; animation: flash 7s infinite; pointer-events:none; z-index:999; }}
+        @keyframes flash {{ 0%, 95%, 100% {{ opacity:0; }} 96% {{ opacity:0.55; }} 97% {{ opacity:0; }} 98% {{ opacity:0.3; }} }}
+        </style>
+        <div class="weather-overlay">{drops}</div>
+        {flash_html}
+        """, unsafe_allow_html=True)
+
+    elif effect == "snow":
+        flakes = ""
+        for _ in range(24):
+            left = random.uniform(0, 100)
+            delay = random.uniform(0, 5)
+            duration = random.uniform(4, 8)
+            size = random.uniform(3, 7)
+            flakes += (f'<div class="snowflake" style="left:{left:.1f}%; width:{size:.1f}px; height:{size:.1f}px; '
+                       f'animation-delay:{delay:.2f}s; animation-duration:{duration:.2f}s;"></div>')
+        st.markdown(f"""
+        <style>
+        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
+            overflow:hidden; pointer-events:none; z-index:-1; }}
+        .snowflake {{ position:absolute; top:-5%; border-radius:50%; background:{theme['accent']};
+            opacity:0.75; animation-name: snowFall; animation-timing-function: linear;
+            animation-iteration-count: infinite; }}
+        @keyframes snowFall {{ from {{ transform: translate(0, -10vh); }} to {{ transform: translate(24px, 110vh); }} }}
+        </style>
+        <div class="weather-overlay">{flakes}</div>
+        """, unsafe_allow_html=True)
+
+    elif effect == "sun":
+        st.markdown(f"""
+        <style>
+        .weather-overlay {{ position: fixed; top:-25%; right:-15%; width:60vw; height:60vw;
+            pointer-events:none; z-index:-1; border-radius:50%;
+            background: radial-gradient(circle, {theme['glow']} 0%, transparent 70%);
+            animation: sunPulse 4s ease-in-out infinite; }}
+        @keyframes sunPulse {{ 0%,100% {{ opacity:0.75; }} 50% {{ opacity:1; }} }}
+        </style>
+        <div class="weather-overlay"></div>
+        """, unsafe_allow_html=True)
+
+    elif effect in ("clouds", "fog"):
+        st.markdown(f"""
+        <style>
+        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
+            overflow:hidden; pointer-events:none; z-index:-1; }}
+        .cloud-blob {{ position:absolute; border-radius:50%; background:{theme['glow']};
+            filter: blur(30px); animation-name: cloudDrift; animation-timing-function: linear;
+            animation-iteration-count: infinite; }}
+        @keyframes cloudDrift {{ from {{ transform: translateX(-25vw); }} to {{ transform: translateX(125vw); }} }}
+        </style>
+        <div class="weather-overlay">
+            <div class="cloud-blob" style="top:8%; width:220px; height:80px; animation-duration:38s;"></div>
+            <div class="cloud-blob" style="top:28%; width:160px; height:60px; animation-duration:28s; animation-delay:-10s;"></div>
+            <div class="cloud-blob" style="top:52%; width:260px; height:90px; animation-duration:45s; animation-delay:-20s;"></div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+model = load_model()
+
+# ---------------------------------------------------------------------------
+# Language selector
+# ---------------------------------------------------------------------------
+lang_col, _ = st.columns([1, 2.5])
+with lang_col:
+    selected_lang_name = st.selectbox(
+        "Language", list(LANGUAGES.keys()), label_visibility="collapsed"
+    )
+lang = LANGUAGES[selected_lang_name]
+T = UI_STRINGS[lang]
+
+# ---------------------------------------------------------------------------
+# Location input — drives both the weather theme and the irrigation tip
+# ---------------------------------------------------------------------------
+st.markdown(f'<div class="loc-label">{T["location_heading"]}</div>', unsafe_allow_html=True)
+city = st.text_input("Location", placeholder=T["location_placeholder"], label_visibility="collapsed")
+
+weather_data = None
+weather_configured = True
+if city:
+    api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
+    if not api_key:
+        weather_configured = False
+    else:
+        weather_data = get_weather(city, api_key)
+        if weather_data:
+            theme = get_weather_theme(weather_data["weather"][0]["main"])
+            render_weather_theme(theme)
+
+# ---------------------------------------------------------------------------
+# Hero
+# ---------------------------------------------------------------------------
+st.markdown(f"""
+<div class="hero">
+    <div class="hero-team">Team Cyberpunk</div>
+    <div class="hero-eyebrow">{T['eyebrow_system']}</div>
+    <h1>🌱 Agro Edge</h1>
+    <p>{T['hero_desc']}</p>
+</div>
+""", unsafe_allow_html=True)
+
 _, soil_col, weather_col = st.columns([2, 1, 1])
 
 with soil_col:
@@ -634,28 +794,24 @@ with soil_col:
 with weather_col:
     with st.popover(T["weather_button"], use_container_width=True):
         st.markdown(f'<div class="eyebrow">{T["weather_eyebrow"]}</div>', unsafe_allow_html=True)
-        city = st.text_input(T["place_label"], placeholder=T["place_placeholder"])
-
-        if city:
-            api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
-            if not api_key:
-                st.info(T["weather_not_configured"])
-            else:
-                weather_data = get_weather(city, api_key)
-                if weather_data:
-                    temp = weather_data["main"]["temp"]
-                    condition = weather_data["weather"][0]["description"].title()
-                    tip = get_irrigation_tip(weather_data)
-                    condition_t = translate_text(condition, lang)
-                    tip_t = translate_text(tip, lang)
-                    st.markdown(f"""
-                    <div style="margin-top:0.6rem;">
-                        <p style="margin:0 0 0.4rem 0; font-weight:600; color:var(--text);">{city} — {condition_t}, {temp}°C</p>
-                        <p style="margin:0; font-size:0.92rem; color:var(--text);">{tip_t}</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.warning(T["weather_error"])
+        if not city:
+            st.info(T["enter_location_hint"])
+        elif not weather_configured:
+            st.info(T["weather_not_configured"])
+        elif weather_data:
+            temp = weather_data["main"]["temp"]
+            condition = weather_data["weather"][0]["description"].title()
+            tip = get_irrigation_tip(weather_data)
+            condition_t = translate_text(condition, lang)
+            tip_t = translate_text(tip, lang)
+            st.markdown(f"""
+            <div style="margin-top:0.6rem;">
+                <p style="margin:0 0 0.4rem 0; font-weight:600; color:var(--text);">{city} — {condition_t}, {temp}°C</p>
+                <p style="margin:0; font-size:0.92rem; color:var(--text);">{tip_t}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.warning(T["weather_error"])
 
 
 uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
