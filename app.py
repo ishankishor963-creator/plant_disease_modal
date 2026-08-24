@@ -550,4 +550,4 @@ if uploaded_file is not None:
             </div>
             """, unsafe_allow_html=True)
 
-st.markdown('<div cla
+st.markdown('<div class="sys-footer">Agro Edge // Crop Intelligence System // Team Cyberpunk</div>', unsafe_allow_html=True)
