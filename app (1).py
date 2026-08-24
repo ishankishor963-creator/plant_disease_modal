@@ -391,6 +391,23 @@ def get_irrigation_tip(weather_data):
         return "🌤️ Conditions look moderate — water as per your crop's normal schedule."
 
 
+def get_soil_moisture():
+    """Fetch latest soil moisture reading from ThingSpeak."""
+    channel_id = "3467712"
+    read_api_key = "GV82FOVOEX7A2MQU"
+    url = f"https://api.thingspeak.com/channels/{channel_id}/feeds.json"
+    params = {"api_key": read_api_key, "results": 1}
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("feeds"):
+                return data["feeds"][0]
+        return None
+    except requests.exceptions.RequestException:
+        return None
+
+
 def gauge_color(pct):
     if pct >= 85:
         return "#A6FF3C"  # confident — accent lime
@@ -398,6 +415,33 @@ def gauge_color(pct):
         return "#FFC857"  # moderate — amber
     else:
         return "#FF6B5C"  # low — danger red
+
+
+# ---------------------------------------------------------------------------
+# Live soil moisture card
+# ---------------------------------------------------------------------------
+soil_data = get_soil_moisture()
+if soil_data and soil_data.get("field1") is not None:
+    moisture = float(soil_data["field1"])
+    timestamp = soil_data["created_at"]
+    color = gauge_color(moisture)
+
+    st.markdown(f"""
+    <div class="card">
+        <div class="eyebrow">Live Sensor Feed</div>
+        <div class="result-title">🌱 Soil Moisture</div>
+        <div class="gauge-wrap">
+            <div class="gauge-label">
+                <span>Moisture Level</span>
+                <span class="gauge-value">{moisture:.0f}%</span>
+            </div>
+            <div class="gauge-track">
+                <div class="gauge-fill" style="width:{moisture:.0f}%; background:{color}; box-shadow: 0 0 12px {color}77;"></div>
+            </div>
+        </div>
+        <p style="margin-top:0.9rem; font-size:0.8rem; color:var(--text-muted); font-family:'IBM Plex Mono', monospace;">Last updated: {timestamp}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 _, popover_col = st.columns([3, 1])
