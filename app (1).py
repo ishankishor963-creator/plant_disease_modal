@@ -417,35 +417,33 @@ def gauge_color(pct):
         return "#FF6B5C"  # low — danger red
 
 
-# ---------------------------------------------------------------------------
-# Live soil moisture card
-# ---------------------------------------------------------------------------
-soil_data = get_soil_moisture()
-if soil_data and soil_data.get("field1") is not None:
-    moisture = float(soil_data["field1"])
-    timestamp = soil_data["created_at"]
-    color = gauge_color(moisture)
+_, soil_col, weather_col = st.columns([2, 1, 1])
 
-    st.markdown(f"""
-    <div class="card">
-        <div class="eyebrow">Live Sensor Feed</div>
-        <div class="result-title">🌱 Soil Moisture</div>
-        <div class="gauge-wrap">
-            <div class="gauge-label">
-                <span>Moisture Level</span>
-                <span class="gauge-value">{moisture:.0f}%</span>
+with soil_col:
+    with st.popover("🌱 Soil Moisture", use_container_width=True):
+        st.markdown('<div class="eyebrow">Live Sensor Feed</div>', unsafe_allow_html=True)
+        soil_data = get_soil_moisture()
+        if soil_data and soil_data.get("field1") is not None:
+            moisture = float(soil_data["field1"])
+            timestamp = soil_data["created_at"]
+            color = gauge_color(moisture)
+
+            st.markdown(f"""
+            <div class="gauge-wrap" style="margin-top:0.6rem;">
+                <div class="gauge-label">
+                    <span>Moisture Level</span>
+                    <span class="gauge-value">{moisture:.0f}%</span>
+                </div>
+                <div class="gauge-track">
+                    <div class="gauge-fill" style="width:{moisture:.0f}%; background:{color}; box-shadow: 0 0 12px {color}77;"></div>
+                </div>
             </div>
-            <div class="gauge-track">
-                <div class="gauge-fill" style="width:{moisture:.0f}%; background:{color}; box-shadow: 0 0 12px {color}77;"></div>
-            </div>
-        </div>
-        <p style="margin-top:0.9rem; font-size:0.8rem; color:var(--text-muted); font-family:'IBM Plex Mono', monospace;">Last updated: {timestamp}</p>
-    </div>
-    """, unsafe_allow_html=True)
+            <p style="margin-top:0.9rem; font-size:0.8rem; color:var(--text-muted); font-family:'IBM Plex Mono', monospace;">Last updated: {timestamp}</p>
+            """, unsafe_allow_html=True)
+        else:
+            st.warning("Couldn't fetch soil moisture data — check the sensor and ThingSpeak connection.")
 
-
-_, popover_col = st.columns([3, 1])
-with popover_col:
+with weather_col:
     with st.popover("🌦️ Irrigation Tip", use_container_width=True):
         st.markdown('<div class="eyebrow">Field Conditions</div>', unsafe_allow_html=True)
         city = st.text_input("Place name", placeholder="Enter your city/location")
@@ -552,4 +550,4 @@ if uploaded_file is not None:
             </div>
             """, unsafe_allow_html=True)
 
-st.markdown('<div class="sys-footer">Agro Edge // Crop Intelligence System // Team Cyberpunk</div>', unsafe_allow_html=True)
+st.markdown('<div cla
