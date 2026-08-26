@@ -1,5 +1,4 @@
 
-
 import streamlit as st
 import numpy as np
 from PIL import Image
@@ -559,7 +558,7 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
  
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("plant_model_v4.keras")
+    return tf.keras.models.load_model("plant_model_v5.keras")
  
  
 def get_weather(city_name, api_key):
