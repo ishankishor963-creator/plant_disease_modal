@@ -1,14 +1,12 @@
-
-
 import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
 import requests
 import time
- 
+
 from recommendations import RECOMMENDATIONS
- 
+
 # Class names must be in the same order the model was trained on
 CLASS_NAMES = [
     "Apple___Apple_scab",
@@ -50,11 +48,11 @@ CLASS_NAMES = [
     "Tomato___Tomato_mosaic_virus",
     "Tomato___healthy",
 ]
- 
+
 SUPPORTED_CROPS = "apple, blueberry, cherry, corn, grape, orange, peach, pepper, potato, raspberry, soybean, squash, strawberry, tomato"
- 
+
 st.set_page_config(page_title="Agro Edge", page_icon="🌱", layout="centered")
- 
+
 # ---------------------------------------------------------------------------
 # Design system — AgriPulse-inspired glass-panel aesthetic, adapted for
 # Streamlit. Same color tokens, fonts and card language as the AgriPulse
@@ -64,7 +62,7 @@ st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
- 
+
 <style>
 :root {
     /* AgriPulse color tokens */
@@ -89,9 +87,9 @@ st.markdown("""
     --error-container: #93000a;
     --glow: rgba(224,242,241,0.18);
 }
- 
+
 #MainMenu, footer, header { visibility: hidden; }
- 
+
 .stApp {
     background-color: var(--bg);
     background-image:
@@ -100,12 +98,12 @@ st.markdown("""
 }
 body, [class*="css"] { font-family: 'Hanken Grotesk', sans-serif; color: var(--text); }
 h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
- 
+
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     vertical-align: middle;
 }
- 
+
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
@@ -121,7 +119,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
 @keyframes growFill {
     from { width: 0%; }
 }
- 
+
 /* Glass panel base, matching AgriPulse's .glass-card */
 .glass {
     background: rgba(255,255,255,0.05);
@@ -130,7 +128,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     border: 1px solid var(--border);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
 }
- 
+
 /* Hero */
 .hero {
     background: rgba(255,255,255,0.04);
@@ -188,7 +186,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     max-width: 32rem;
     line-height: 1.55;
 }
- 
+
 /* Cards */
 .card {
     background: rgba(255,255,255,0.05);
@@ -220,7 +218,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     color: var(--sapling-green) !important;
     margin: 0 0 1.1rem 0;
 }
- 
+
 /* Confidence gauge */
 .gauge-wrap { margin-bottom: 0.3rem; }
 .gauge-label {
@@ -246,7 +244,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     border-radius: 6px;
     animation: growFill 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
- 
+
 /* Recommendation grid — bento style */
 .rec-grid {
     display: grid;
@@ -283,7 +281,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     line-height: 1.55;
     color: var(--text) !important;
 }
- 
+
 /* Unrecognized-crop alert */
 .unrecognized {
     border: 1px solid rgba(255,180,171,0.35);
@@ -305,7 +303,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     margin-bottom: 0.5rem;
     font-weight: 500;
 }
- 
+
 /* Scan sequence */
 .scan-card {
     background: rgba(255,255,255,0.05);
@@ -341,7 +339,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     animation: pulseGlow 1.6s ease-in-out infinite;
 }
 .scan-line span { color: var(--sky-tint); }
- 
+
 /* Weather / irrigation panel (AgriPulse hero-weather-card styling) */
 .weather-card {
     background: rgba(255,255,255,0.05);
@@ -367,7 +365,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     color: var(--text);
     line-height: 1.5;
 }
- 
+
 /* File uploader */
 [data-testid="stFileUploader"] section {
     border: 2px dashed rgba(224,242,241,0.35);
@@ -375,7 +373,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     background: rgba(255,255,255,0.04);
 }
 [data-testid="stFileUploader"] label p { color: var(--text-muted) !important; }
- 
+
 /* Popover trigger button */
 [data-testid="stPopover"] button, .stPopover button {
     background: rgba(255,255,255,0.05) !important;
@@ -386,7 +384,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
     font-size: 0.82rem !important;
     letter-spacing: 0.05em !important;
 }
- 
+
 /* Footer */
 .sys-footer {
     font-family: 'JetBrains Mono', monospace;
@@ -401,7 +399,7 @@ h1, h2, h3 { font-family: 'Hanken Grotesk', sans-serif; }
 }
 </style>
 """, unsafe_allow_html=True)
- 
+
 # ---------------------------------------------------------------------------
 # Hero
 # ---------------------------------------------------------------------------
@@ -416,16 +414,16 @@ st.markdown("""
     <p>Upload a photo of a crop leaf to detect disease and get treatment advice — plus a weather-based irrigation tip for your location.</p>
 </div>
 """, unsafe_allow_html=True)
- 
- 
+
+
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("plant_model_v4.keras")
- 
- 
+    return tf.keras.models.load_model("plant_model_v5.keras")
+
+
 model = load_model()
- 
- 
+
+
 def get_weather(city_name, api_key):
     """Fetch current weather for a city using OpenWeatherMap. Returns dict or None on failure."""
     url = "https://api.openweathermap.org/data/2.5/weather"
@@ -437,14 +435,14 @@ def get_weather(city_name, api_key):
         return None
     except requests.exceptions.RequestException:
         return None
- 
- 
+
+
 def get_irrigation_tip(weather_data):
     """Simple rule-based irrigation advice based on current conditions."""
     condition = weather_data["weather"][0]["main"].lower()
     temp = weather_data["main"]["temp"]
     humidity = weather_data["main"]["humidity"]
- 
+
     if "rain" in condition or "drizzle" in condition or "thunderstorm" in condition:
         return "🌧️ Rain detected — delay watering to avoid overwatering and root issues."
     elif temp > 32 and humidity < 40:
@@ -453,8 +451,8 @@ def get_irrigation_tip(weather_data):
         return "💧 High humidity — go easy on watering, and monitor for fungal disease risk (many crop diseases spread faster in humid conditions)."
     else:
         return "🌤️ Conditions look moderate — water as per your crop's normal schedule."
- 
- 
+
+
 def gauge_color(pct):
     if pct >= 85:
         return "#7DBE6F"  # confident — sapling green
@@ -462,8 +460,8 @@ def gauge_color(pct):
         return "#e9c349"  # moderate — amber
     else:
         return "#ffb4ab"  # low — error red
- 
- 
+
+
 _, popover_col = st.columns([3, 1])
 with popover_col:
     with st.popover("🌦️ Irrigation Tip", use_container_width=True):
@@ -474,7 +472,7 @@ with popover_col:
             unsafe_allow_html=True,
         )
         city = st.text_input("Place name", placeholder="Enter your city/location")
- 
+
         if city:
             api_key = st.secrets.get("OPENWEATHER_API_KEY", None)
             if not api_key:
@@ -496,19 +494,19 @@ with popover_col:
                     """, unsafe_allow_html=True)
                 else:
                     st.warning("Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.")
- 
- 
+
+
 uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
- 
+
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Uploaded image", use_container_width=True)
- 
+
     # Preprocess exactly like training: resize to 224x224
     img_resized = image.resize((224, 224))
     img_array = np.array(img_resized)
     img_array = np.expand_dims(img_array, axis=0)  # add batch dimension
- 
+
     scan_placeholder = st.empty()
     scan_placeholder.markdown("""
     <div class="scan-card">
@@ -522,17 +520,17 @@ if uploaded_file is not None:
         <div class="scan-line">&gt; <span>Computing confidence score...</span></div>
     </div>
     """, unsafe_allow_html=True)
- 
+
     predictions = model.predict(img_array)
     predicted_index = np.argmax(predictions[0])
     predicted_class = CLASS_NAMES[predicted_index]
     confidence = 100 * np.max(predictions[0])
- 
+
     time.sleep(0.4)  # let the scan animation register before revealing the result
     scan_placeholder.empty()
- 
+
     display_name = predicted_class.replace("___", " - ").replace("__", " ").replace("_", " ")
- 
+
     if confidence < 70:
         st.markdown(f"""
         <div class="card">
@@ -553,7 +551,7 @@ if uploaded_file is not None:
     else:
         color = gauge_color(confidence)
         confidence_note = "" if confidence >= 85 else '<p style="margin-top:0.9rem; font-size:0.86rem; color:var(--text-muted);">Confidence is moderate — a clearer, well-lit photo of a single leaf may improve accuracy.</p>'
- 
+
         st.markdown(f"""
         <div class="card">
             <div class="eyebrow">
@@ -573,7 +571,7 @@ if uploaded_file is not None:
             {confidence_note}
         </div>
         """, unsafe_allow_html=True)
- 
+
         info = RECOMMENDATIONS.get(predicted_class)
         if info:
             st.markdown(f"""
@@ -612,6 +610,5 @@ if uploaded_file is not None:
                 </p>
             </div>
             """, unsafe_allow_html=True)
- 
+
 st.markdown('<div class="sys-footer">Agro Edge // Crop Intelligence System // Team Cyberpunk</div>', unsafe_allow_html=True)
- 
