@@ -81,9 +81,12 @@ UI_STRINGS = {
         "weather_error": "Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.",
         "upload_label": "Upload a leaf image",
         "uploaded_caption": "Uploaded image",
+        "input_upload_option": "Upload Photo",
+        "input_camera_option": "Use Camera",
+        "camera_label": "Take a photo of the leaf",
         "analyzing_eyebrow": "Analyzing Sample",
         "scan_line1": "Extracting visual features...",
-        "scan_line2": "Cross-referencing 38 crop-disease profiles...",
+        "scan_line2": "Cross-referencing 55 crop-disease profiles...",
         "scan_line3": "Computing confidence score...",
         "diagnosis_eyebrow": "Diagnosis",
         "not_recognized_label": "⚠ Crop Not Recognized",
@@ -112,9 +115,12 @@ UI_STRINGS = {
         "weather_error": "उस स्थान का मौसम नहीं मिल सका — वर्तनी जांचें या किसी नज़दीकी बड़े शहर का नाम आज़माएं।",
         "upload_label": "पत्ती की फोटो अपलोड करें",
         "uploaded_caption": "अपलोड की गई फोटो",
+        "input_upload_option": "फोटो अपलोड करें",
+        "input_camera_option": "कैमरा उपयोग करें",
+        "camera_label": "पत्ती की फोटो लें",
         "analyzing_eyebrow": "नमूने का विश्लेषण हो रहा है",
         "scan_line1": "दृश्य विशेषताएं निकाली जा रही हैं...",
-        "scan_line2": "38 फसल-रोग प्रोफाइल से तुलना हो रही है...",
+        "scan_line2": "55 फसल-रोग प्रोफाइल से तुलना हो रही है...",
         "scan_line3": "विश्वास स्कोर की गणना हो रही है...",
         "diagnosis_eyebrow": "निदान",
         "not_recognized_label": "⚠ फसल पहचानी नहीं गई",
@@ -143,9 +149,12 @@ UI_STRINGS = {
         "weather_error": "ആ സ്ഥലത്തെ കാലാവസ്ഥ ലഭിച്ചില്ല — അക്ഷരവിന്യാസം പരിശോധിക്കുക അല്ലെങ്കിൽ അടുത്തുള്ള വലിയ നഗരത്തിന്റെ പേര് ശ്രമിക്കുക.",
         "upload_label": "ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
         "uploaded_caption": "അപ്‌ലോഡ് ചെയ്ത ഫോട്ടോ",
+        "input_upload_option": "ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
+        "input_camera_option": "ക്യാമറ ഉപയോഗിക്കുക",
+        "camera_label": "ഇലയുടെ ഫോട്ടോ എടുക്കുക",
         "analyzing_eyebrow": "സാമ്പിൾ വിശകലനം ചെയ്യുന്നു",
         "scan_line1": "ദൃശ്യ സവിശേഷതകൾ എടുക്കുന്നു...",
-        "scan_line2": "38 വിള-രോഗ പ്രൊഫൈലുകളുമായി താരതമ്യം ചെയ്യുന്നു...",
+        "scan_line2": "55 വിള-രോഗ പ്രൊഫൈലുകളുമായി താരതമ്യം ചെയ്യുന്നു...",
         "scan_line3": "വിശ്വാസ്യതാ സ്കോർ കണക്കാക്കുന്നു...",
         "diagnosis_eyebrow": "രോഗനിർണയം",
         "not_recognized_label": "⚠ വിള തിരിച്ചറിഞ്ഞില്ല",
@@ -174,9 +183,12 @@ UI_STRINGS = {
         "weather_error": "ಆ ಸ್ಥಳದ ಹವಾಮಾನ ಸಿಗಲಿಲ್ಲ — ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.",
         "upload_label": "ಎಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
         "uploaded_caption": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋ",
+        "input_upload_option": "ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        "input_camera_option": "ಕ್ಯಾಮೆರಾ ಬಳಸಿ",
+        "camera_label": "ಎಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ",
         "analyzing_eyebrow": "ಮಾದರಿ ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ",
         "scan_line1": "ದೃಶ್ಯ ಲಕ್ಷಣಗಳನ್ನು ಹೊರತೆಗೆಯಲಾಗುತ್ತಿದೆ...",
-        "scan_line2": "38 ಬೆಳೆ-ರೋಗ ಪ್ರೊಫೈಲ್‌ಗಳೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ...",
+        "scan_line2": "55 ಬೆಳೆ-ರೋಗ ಪ್ರೊಫೈಲ್‌ಗಳೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ...",
         "scan_line3": "ವಿಶ್ವಾಸ ಅಂಕವನ್ನು ಲೆಕ್ಕಹಾಕಲಾಗುತ್ತಿದೆ...",
         "diagnosis_eyebrow": "ರೋಗ ನಿರ್ಣಯ",
         "not_recognized_label": "⚠ ಬೆಳೆ ಗುರುತಿಸಲಾಗಲಿಲ್ಲ",
@@ -205,9 +217,12 @@ UI_STRINGS = {
         "weather_error": "அந்த இடத்திற்கான வானிலை கிடைக்கவில்லை — எழுத்துப்பிழையை சரிபார்க்கவும் அல்லது அருகிலுள்ள பெரிய நகரத்தின் பெயரை முயற்சிக்கவும்.",
         "upload_label": "இலையின் புகைப்படத்தை பதிவேற்றவும்",
         "uploaded_caption": "பதிவேற்றப்பட்ட புகைப்படம்",
+        "input_upload_option": "புகைப்படத்தை பதிவேற்றவும்",
+        "input_camera_option": "கேமராவைப் பயன்படுத்தவும்",
+        "camera_label": "இலையின் புகைப்படத்தை எடுக்கவும்",
         "analyzing_eyebrow": "மாதிரி பகுப்பாய்வு செய்யப்படுகிறது",
         "scan_line1": "காட்சி அம்சங்கள் பிரித்தெடுக்கப்படுகின்றன...",
-        "scan_line2": "38 பயிர்-நோய் விவரக்குறிப்புகளுடன் ஒப்பிடப்படுகிறது...",
+        "scan_line2": "55 பயிர்-நோய் விவரக்குறிப்புகளுடன் ஒப்பிடப்படுகிறது...",
         "scan_line3": "நம்பகத்தன்மை மதிப்பெண் கணக்கிடப்படுகிறது...",
         "diagnosis_eyebrow": "நோய் கண்டறிதல்",
         "not_recognized_label": "⚠ பயிர் அடையாளம் காணப்படவில்லை",
@@ -498,6 +513,12 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
     background: var(--surface);
 }
 [data-testid="stFileUploader"] label p { color: var(--text-muted) !important; }
+
+/* Camera input */
+[data-testid="stCameraInput"] video, [data-testid="stCameraInput"] img {
+    border-radius: 14px;
+    border: 2px solid rgba(166,255,60,0.4);
+}
 
 /* Popover trigger button */
 [data-testid="stPopover"] button, .stPopover button {
@@ -814,10 +835,25 @@ with weather_col:
             st.warning(T["weather_error"])
 
 
-uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
+input_mode = st.radio(
+    "Input method",
+    [T["input_upload_option"], T["input_camera_option"]],
+    horizontal=True,
+    label_visibility="collapsed",
+)
 
-if uploaded_file is not None:
-    image = Image.open(uploaded_file).convert("RGB")
+image_source = None
+if input_mode == T["input_upload_option"]:
+    uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
+    if uploaded_file is not None:
+        image_source = uploaded_file
+else:
+    camera_file = st.camera_input(T["camera_label"], label_visibility="collapsed")
+    if camera_file is not None:
+        image_source = camera_file
+
+if image_source is not None:
+    image = Image.open(image_source).convert("RGB")
     st.image(image, caption=T["uploaded_caption"], use_container_width=True)
 
     # Preprocess exactly like training: resize to 224x224
