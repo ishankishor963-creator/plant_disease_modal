@@ -1,4 +1,4 @@
-import streamlit as st
+\import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
@@ -6,6 +6,7 @@ import requests
 import time
 import random
 from deep_translator import GoogleTranslator
+from ddgs import DDGS
 
 from recommendations import RECOMMENDATIONS
 
@@ -81,12 +82,9 @@ UI_STRINGS = {
         "weather_error": "Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.",
         "upload_label": "Upload a leaf image",
         "uploaded_caption": "Uploaded image",
-        "input_upload_option": "Upload Photo",
-        "input_camera_option": "Use Camera",
-        "camera_label": "Take a photo of the leaf",
         "analyzing_eyebrow": "Analyzing Sample",
         "scan_line1": "Extracting visual features...",
-        "scan_line2": "Cross-referencing 55 crop-disease profiles...",
+        "scan_line2": "Cross-referencing 38 crop-disease profiles...",
         "scan_line3": "Computing confidence score...",
         "diagnosis_eyebrow": "Diagnosis",
         "not_recognized_label": "⚠ Crop Not Recognized",
@@ -96,6 +94,10 @@ UI_STRINGS = {
         "treatment_eyebrow": "Treatment Protocol",
         "what_means_header": "What This Means",
         "recommended_action_header": "Recommended Action",
+        "web_search_button": "🌐 Search the Web for More Info",
+        "web_searching": "Searching the web for more information...",
+        "web_info_eyebrow": "More Info from the Web",
+        "web_no_results": "No web results found — try again in a moment.",
         "footer": "Agro Edge // Crop Intelligence System // Team Cyberpunk",
         "last_updated": "Last updated:",
     },
@@ -115,12 +117,9 @@ UI_STRINGS = {
         "weather_error": "उस स्थान का मौसम नहीं मिल सका — वर्तनी जांचें या किसी नज़दीकी बड़े शहर का नाम आज़माएं।",
         "upload_label": "पत्ती की फोटो अपलोड करें",
         "uploaded_caption": "अपलोड की गई फोटो",
-        "input_upload_option": "फोटो अपलोड करें",
-        "input_camera_option": "कैमरा उपयोग करें",
-        "camera_label": "पत्ती की फोटो लें",
         "analyzing_eyebrow": "नमूने का विश्लेषण हो रहा है",
         "scan_line1": "दृश्य विशेषताएं निकाली जा रही हैं...",
-        "scan_line2": "55 फसल-रोग प्रोफाइल से तुलना हो रही है...",
+        "scan_line2": "38 फसल-रोग प्रोफाइल से तुलना हो रही है...",
         "scan_line3": "विश्वास स्कोर की गणना हो रही है...",
         "diagnosis_eyebrow": "निदान",
         "not_recognized_label": "⚠ फसल पहचानी नहीं गई",
@@ -130,6 +129,10 @@ UI_STRINGS = {
         "treatment_eyebrow": "उपचार प्रोटोकॉल",
         "what_means_header": "इसका क्या अर्थ है",
         "recommended_action_header": "अनुशंसित कार्रवाई",
+        "web_search_button": "🌐 अधिक जानकारी के लिए वेब खोजें",
+        "web_searching": "अधिक जानकारी के लिए वेब खोजी जा रही है...",
+        "web_info_eyebrow": "वेब से अधिक जानकारी",
+        "web_no_results": "कोई वेब परिणाम नहीं मिला — कुछ देर बाद पुनः प्रयास करें।",
         "footer": "एग्रो एज // क्रॉप इंटेलिजेंस सिस्टम // टीम साइबरपंक",
         "last_updated": "आखिरी बार अपडेट किया गया:",
     },
@@ -149,12 +152,9 @@ UI_STRINGS = {
         "weather_error": "ആ സ്ഥലത്തെ കാലാവസ്ഥ ലഭിച്ചില്ല — അക്ഷരവിന്യാസം പരിശോധിക്കുക അല്ലെങ്കിൽ അടുത്തുള്ള വലിയ നഗരത്തിന്റെ പേര് ശ്രമിക്കുക.",
         "upload_label": "ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
         "uploaded_caption": "അപ്‌ലോഡ് ചെയ്ത ഫോട്ടോ",
-        "input_upload_option": "ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
-        "input_camera_option": "ക്യാമറ ഉപയോഗിക്കുക",
-        "camera_label": "ഇലയുടെ ഫോട്ടോ എടുക്കുക",
         "analyzing_eyebrow": "സാമ്പിൾ വിശകലനം ചെയ്യുന്നു",
         "scan_line1": "ദൃശ്യ സവിശേഷതകൾ എടുക്കുന്നു...",
-        "scan_line2": "55 വിള-രോഗ പ്രൊഫൈലുകളുമായി താരതമ്യം ചെയ്യുന്നു...",
+        "scan_line2": "38 വിള-രോഗ പ്രൊഫൈലുകളുമായി താരതമ്യം ചെയ്യുന്നു...",
         "scan_line3": "വിശ്വാസ്യതാ സ്കോർ കണക്കാക്കുന്നു...",
         "diagnosis_eyebrow": "രോഗനിർണയം",
         "not_recognized_label": "⚠ വിള തിരിച്ചറിഞ്ഞില്ല",
@@ -164,6 +164,10 @@ UI_STRINGS = {
         "treatment_eyebrow": "ചികിത്സാ പ്രോട്ടോക്കോൾ",
         "what_means_header": "ഇതിന്റെ അർത്ഥം",
         "recommended_action_header": "ശുപാർശ ചെയ്യുന്ന നടപടി",
+        "web_search_button": "🌐 കൂടുതൽ വിവരങ്ങൾക്കായി വെബ് തിരയുക",
+        "web_searching": "കൂടുതൽ വിവരങ്ങൾക്കായി വെബ് തിരയുന്നു...",
+        "web_info_eyebrow": "വെബിൽ നിന്നുള്ള കൂടുതൽ വിവരങ്ങൾ",
+        "web_no_results": "വെബ് ഫലങ്ങളൊന്നും കണ്ടെത്തിയില്ല — അൽപ്പസമയം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.",
         "footer": "അഗ്രോ എഡ്ജ് // ക്രോപ്പ് ഇന്റലിജൻസ് സിസ്റ്റം // ടീം സൈബർപങ്ക്",
         "last_updated": "അവസാനം അപ്ഡേറ്റ് ചെയ്തത്:",
     },
@@ -183,12 +187,9 @@ UI_STRINGS = {
         "weather_error": "ಆ ಸ್ಥಳದ ಹವಾಮಾನ ಸಿಗಲಿಲ್ಲ — ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.",
         "upload_label": "ಎಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
         "uploaded_caption": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋ",
-        "input_upload_option": "ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
-        "input_camera_option": "ಕ್ಯಾಮೆರಾ ಬಳಸಿ",
-        "camera_label": "ಎಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ",
         "analyzing_eyebrow": "ಮಾದರಿ ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ",
         "scan_line1": "ದೃಶ್ಯ ಲಕ್ಷಣಗಳನ್ನು ಹೊರತೆಗೆಯಲಾಗುತ್ತಿದೆ...",
-        "scan_line2": "55 ಬೆಳೆ-ರೋಗ ಪ್ರೊಫೈಲ್‌ಗಳೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ...",
+        "scan_line2": "38 ಬೆಳೆ-ರೋಗ ಪ್ರೊಫೈಲ್‌ಗಳೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ...",
         "scan_line3": "ವಿಶ್ವಾಸ ಅಂಕವನ್ನು ಲೆಕ್ಕಹಾಕಲಾಗುತ್ತಿದೆ...",
         "diagnosis_eyebrow": "ರೋಗ ನಿರ್ಣಯ",
         "not_recognized_label": "⚠ ಬೆಳೆ ಗುರುತಿಸಲಾಗಲಿಲ್ಲ",
@@ -198,6 +199,10 @@ UI_STRINGS = {
         "treatment_eyebrow": "ಚಿಕಿತ್ಸಾ ಪ್ರೋಟೋಕಾಲ್",
         "what_means_header": "ಇದರ ಅರ್ಥವೇನು",
         "recommended_action_header": "ಶಿಫಾರಸು ಮಾಡಿದ ಕ್ರಮ",
+        "web_search_button": "🌐 ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ವೆಬ್ ಹುಡುಕಿ",
+        "web_searching": "ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ವೆಬ್ ಹುಡುಕಲಾಗುತ್ತಿದೆ...",
+        "web_info_eyebrow": "ವೆಬ್‌ನಿಂದ ಹೆಚ್ಚಿನ ಮಾಹಿತಿ",
+        "web_no_results": "ಯಾವುದೇ ವೆಬ್ ಫಲಿತಾಂಶಗಳು ಕಂಡುಬಂದಿಲ್ಲ — ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
         "footer": "ಅಗ್ರೋ ಎಡ್ಜ್ // ಕ್ರಾಪ್ ಇಂಟೆಲಿಜೆನ್ಸ್ ಸಿಸ್ಟಮ್ // ಟೀಂ ಸೈಬರ್‌ಪಂಕ್",
         "last_updated": "ಕೊನೆಯದಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ:",
     },
@@ -217,12 +222,9 @@ UI_STRINGS = {
         "weather_error": "அந்த இடத்திற்கான வானிலை கிடைக்கவில்லை — எழுத்துப்பிழையை சரிபார்க்கவும் அல்லது அருகிலுள்ள பெரிய நகரத்தின் பெயரை முயற்சிக்கவும்.",
         "upload_label": "இலையின் புகைப்படத்தை பதிவேற்றவும்",
         "uploaded_caption": "பதிவேற்றப்பட்ட புகைப்படம்",
-        "input_upload_option": "புகைப்படத்தை பதிவேற்றவும்",
-        "input_camera_option": "கேமராவைப் பயன்படுத்தவும்",
-        "camera_label": "இலையின் புகைப்படத்தை எடுக்கவும்",
         "analyzing_eyebrow": "மாதிரி பகுப்பாய்வு செய்யப்படுகிறது",
         "scan_line1": "காட்சி அம்சங்கள் பிரித்தெடுக்கப்படுகின்றன...",
-        "scan_line2": "55 பயிர்-நோய் விவரக்குறிப்புகளுடன் ஒப்பிடப்படுகிறது...",
+        "scan_line2": "38 பயிர்-நோய் விவரக்குறிப்புகளுடன் ஒப்பிடப்படுகிறது...",
         "scan_line3": "நம்பகத்தன்மை மதிப்பெண் கணக்கிடப்படுகிறது...",
         "diagnosis_eyebrow": "நோய் கண்டறிதல்",
         "not_recognized_label": "⚠ பயிர் அடையாளம் காணப்படவில்லை",
@@ -232,6 +234,10 @@ UI_STRINGS = {
         "treatment_eyebrow": "சிகிச்சை நெறிமுறை",
         "what_means_header": "இதன் பொருள் என்ன",
         "recommended_action_header": "பரிந்துரைக்கப்படும் நடவடிக்கை",
+        "web_search_button": "🌐 மேலும் தகவலுக்கு இணையத்தில் தேடு",
+        "web_searching": "மேலும் தகவலுக்காக இணையத்தில் தேடுகிறது...",
+        "web_info_eyebrow": "இணையத்திலிருந்து கூடுதல் தகவல்",
+        "web_no_results": "இணைய முடிவுகள் எதுவும் கிடைக்கவில்லை — சிறிது நேரம் கழித்து மீண்டும் முயற்சிக்கவும்.",
         "footer": "அக்ரோ எட்ஜ் // பயிர் நுண்ணறிவு அமைப்பு // டீம் சைபர்பங்க்",
         "last_updated": "கடைசியாக புதுப்பிக்கப்பட்டது:",
     },
@@ -514,12 +520,6 @@ h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 }
 [data-testid="stFileUploader"] label p { color: var(--text-muted) !important; }
 
-/* Camera input */
-[data-testid="stCameraInput"] video, [data-testid="stCameraInput"] img {
-    border-radius: 14px;
-    border: 2px solid rgba(166,255,60,0.4);
-}
-
 /* Popover trigger button */
 [data-testid="stPopover"] button, .stPopover button {
     background: var(--surface) !important;
@@ -743,6 +743,17 @@ def render_weather_theme(theme):
         """, unsafe_allow_html=True)
 
 
+@st.cache_data(show_spinner=False, ttl=3600)
+def search_disease_info(query, max_results=3):
+    """Search the web for extra info on a detected disease. Free, no API key needed."""
+    try:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=max_results))
+        return results
+    except Exception:
+        return []
+
+
 model = load_model()
 
 # ---------------------------------------------------------------------------
@@ -835,25 +846,10 @@ with weather_col:
             st.warning(T["weather_error"])
 
 
-input_mode = st.radio(
-    "Input method",
-    [T["input_upload_option"], T["input_camera_option"]],
-    horizontal=True,
-    label_visibility="collapsed",
-)
+uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
 
-image_source = None
-if input_mode == T["input_upload_option"]:
-    uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image_source = uploaded_file
-else:
-    camera_file = st.camera_input(T["camera_label"], label_visibility="collapsed")
-    if camera_file is not None:
-        image_source = camera_file
-
-if image_source is not None:
-    image = Image.open(image_source).convert("RGB")
+if uploaded_file is not None:
+    image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption=T["uploaded_caption"], use_container_width=True)
 
     # Preprocess exactly like training: resize to 224x224
@@ -934,5 +930,25 @@ if image_source is not None:
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+        with st.spinner(T["web_searching"]):
+            web_results = search_disease_info(f"{display_name} plant disease treatment")
+        if web_results:
+            st.markdown(f'<div class="card"><div class="eyebrow">{T["web_info_eyebrow"]}</div>', unsafe_allow_html=True)
+            for r in web_results:
+                title = r.get("title", "")
+                link = r.get("href", "")
+                body = r.get("body", "")[:200]
+                title_t = translate_text(title, lang)
+                body_t = translate_text(body, lang)
+                st.markdown(f"""
+                <div style="margin-bottom:0.9rem; padding-bottom:0.9rem; border-bottom:1px solid var(--border);">
+                    <a href="{link}" target="_blank" style="color:var(--accent-2); font-weight:600; text-decoration:none; font-size:0.95rem;">{title_t}</a>
+                    <p style="margin:0.3rem 0 0 0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">{body_t}...</p>
+                </div>
+                """, unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            st.warning(T["web_no_results"])
 
 st.markdown(f'<div class="sys-footer">{T["footer"]}</div>', unsafe_allow_html=True)
