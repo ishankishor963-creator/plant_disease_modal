@@ -1,8 +1,8 @@
 """
 Disease recommendation dictionary.
-Maps each model class name (exactly as produced by the PlantVillage "color" folder names)
+Maps each model class name (exactly as produced by the merged training dataset)
 to a short description and a practical treatment/management tip.
-Covers 38 classes across 14 crops: apple, blueberry, cherry, corn, grape, orange,
+Covers 55 classes across 14 crops: apple, blueberry, cherry, corn, grape, orange,
 peach, pepper, potato, raspberry, soybean, squash, strawberry, tomato.
 """
 
@@ -71,6 +71,22 @@ RECOMMENDATIONS = {
         "description": "A serious bacterial disease spread by psyllid insects, causing yellowing/mottled leaves, lopsided bitter fruit, and eventual tree decline. There is no cure.",
         "treatment": "Remove and destroy infected trees to prevent spread. Control psyllid populations with recommended insecticides or biological controls, and plant only certified disease-free nursery stock going forward."
     },
+    "Orange___healthy": {
+        "description": "No disease detected. The plant appears healthy.",
+        "treatment": "Continue regular monitoring, balanced fertilization, and consistent watering. No treatment needed."
+    },
+    "Orange___Citrus_Canker": {
+        "description": "A bacterial disease causing raised, corky lesions with a yellow halo on leaves, stems, and fruit, spreading rapidly in warm, wet, windy conditions.",
+        "treatment": "Remove and destroy infected plant material. Apply copper-based bactericides preventively before wet seasons, disinfect tools between trees, and use windbreaks to reduce wind-driven spread."
+    },
+    "Orange___Multiple_Diseases": {
+        "description": "The leaf shows signs consistent with more than one disease or stress factor at once, making a single diagnosis difficult from the image alone.",
+        "treatment": "Isolate the affected tree from healthy ones if possible, and consult a local agricultural extension office for an in-person inspection to identify each contributing issue individually."
+    },
+    "Orange___Nutrient_Deficiency": {
+        "description": "Yellowing leaves (often with green veins remaining) caused by a lack of key nutrients such as nitrogen, zinc, or iron rather than a pathogen.",
+        "treatment": "Test soil pH and nutrient levels, then apply a balanced citrus fertilizer or targeted micronutrient spray (zinc/iron chelate) based on the specific deficiency identified."
+    },
     "Peach___Bacterial_spot": {
         "description": "A bacterial disease causing small, dark, water-soaked spots on leaves and fruit, which can lead to leaf drop and fruit blemishes.",
         "treatment": "Prune for good airflow, avoid overhead irrigation, and apply copper-based bactericides during dormant season and early growing season if the disease is recurring."
@@ -106,6 +122,58 @@ RECOMMENDATIONS = {
     "Soybean___healthy": {
         "description": "No disease detected. The plant appears healthy.",
         "treatment": "Continue regular monitoring, balanced fertilization, and consistent watering. No treatment needed."
+    },
+    "Soybean___Target_Leaf_Spot": {
+        "description": "A fungal disease causing brown, concentric-ringed spots on leaves, resembling a target pattern, most common in warm, humid conditions.",
+        "treatment": "Rotate crops, remove infected residue after harvest, ensure good field drainage and spacing, and apply a fungicide (strobilurin or triazole-based) if the infection spreads."
+    },
+    "Soybean___Ferrugen": {
+        "description": "Asian soybean rust — a fast-spreading fungal disease causing small reddish-brown pustules on the underside of leaves, which can cause severe defoliation and yield loss.",
+        "treatment": "Apply a preventive fungicide (triazole or strobilurin-based) early in the season in high-risk regions, monitor fields closely during humid weather, and use resistant varieties where available."
+    },
+    "Soybean___Yellow_Mosaic": {
+        "description": "A viral disease transmitted by whiteflies, causing irregular yellow and green mosaic patterns on leaves and stunted plant growth.",
+        "treatment": "Remove and destroy infected plants early. Control whitefly populations with insecticidal soap, neem oil, or yellow sticky traps, and use virus-resistant varieties in future plantings."
+    },
+    "Soybean___Brown_Spot": {
+        "description": "A fungal disease (Septoria glycines) causing small brown, angular spots on lower leaves first, which can merge and cause premature leaf drop.",
+        "treatment": "Rotate crops away from soybean for a season, till under infected residue, ensure good field airflow, and apply a fungicide if the infection is severe and conditions stay humid."
+    },
+    "Soybean___Powdery_Mildew": {
+        "description": "A fungal disease causing a white, powdery coating on leaves, most common in cooler, humid growing conditions.",
+        "treatment": "Improve air circulation through proper plant spacing, avoid excess nitrogen fertilizer, and apply a sulfur-based fungicide if the infection is spreading."
+    },
+    "Soybean___Frogeye_Leaf_Spot": {
+        "description": "A fungal disease causing circular grey-brown spots with reddish-brown borders on leaves, resembling a frog's eye, which can reduce yield in warm, humid weather.",
+        "treatment": "Use resistant varieties where available, rotate crops, till under infected residue, and apply a fungicide (strobilurin-based) if detected early in susceptible fields."
+    },
+    "Soybean___Septoria": {
+        "description": "A fungal disease causing small, irregular brown spots on lower leaves, which can merge and cause yellowing and early leaf drop in humid conditions.",
+        "treatment": "Rotate crops, remove and destroy infected residue after harvest, avoid overhead irrigation, and apply a fungicide if the infection spreads significantly."
+    },
+    "Soybean___Southern_Blight": {
+        "description": "A fungal disease (Sclerotium rolfsii) causing wilting and a white, thread-like fungal growth at the base of the stem, often fatal to affected plants.",
+        "treatment": "Remove and destroy infected plants and surrounding soil where possible, improve field drainage, rotate with non-host crops, and avoid deep planting that keeps stems in constantly moist soil."
+    },
+    "Soybean___Mosaic_Virus": {
+        "description": "A viral disease transmitted by aphids, causing mottled light and dark green patterns on leaves, leaf curling, and stunted growth.",
+        "treatment": "Remove and destroy infected plants (no cure once infected). Control aphid populations with insecticidal soap or neem oil, and plant certified virus-free seed in future seasons."
+    },
+    "Soybean___Rust": {
+        "description": "A fungal disease causing small reddish-brown pustules on the underside of leaves, capable of spreading rapidly and causing significant defoliation.",
+        "treatment": "Apply a preventive fungicide (triazole or strobilurin-based) at early signs of infection, monitor fields regularly during humid weather, and consider resistant varieties where available."
+    },
+    "Soybean___Crestamento": {
+        "description": "A disease causing stunted growth, leaf crinkling, and discoloration in soybean plants, associated with viral or phytoplasma infection spread by insect vectors.",
+        "treatment": "Remove and destroy severely affected plants to limit spread. Control insect vectors (leafhoppers/aphids) with appropriate insecticides, and use certified disease-free seed."
+    },
+    "Soybean___Sudden_Death_Syndrome": {
+        "description": "A soilborne fungal disease causing interveinal yellowing and browning on leaves, often with blue fungal growth on roots, leading to sudden wilting.",
+        "treatment": "Use resistant varieties, improve field drainage to reduce soil moisture stress, avoid soil compaction, and rotate with non-host crops. Seed treatments can help reduce early infection."
+    },
+    "Soybean___Bacterial_Pustule": {
+        "description": "A bacterial disease causing small, raised, yellow-green pustules on leaves, which can be confused with soybean rust but has a distinct raised bump at the center.",
+        "treatment": "Use resistant varieties where available, rotate crops, avoid working in wet fields, and remove infected residue after harvest to reduce carryover to the next season."
     },
     "Squash___Powdery_mildew": {
         "description": "A fungal disease causing a white, powdery coating on leaves and stems, common in warm weather with high humidity.",
