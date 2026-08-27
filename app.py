@@ -111,6 +111,9 @@ UI_STRINGS = {
         "weather_not_configured": "Weather feature not configured — add an OpenWeatherMap API key in app secrets to enable this.",
         "weather_error": "Couldn't fetch weather for that location — check the spelling or try a nearby larger city/town name.",
         "upload_label": "Upload a leaf image",
+        "camera_label": "Take a photo",
+        "upload_tab": "📁 Upload",
+        "camera_tab": "📷 Camera",
         "uploaded_caption": "Uploaded image",
         "analyzing_eyebrow": "Analyzing Sample",
         "scan_line1": "Extracting visual features...",
@@ -144,6 +147,9 @@ UI_STRINGS = {
         "weather_not_configured": "मौसम सुविधा कॉन्फ़िगर नहीं है — इसे सक्षम करने के लिए ऐप सीक्रेट्स में OpenWeatherMap API कुंजी जोड़ें।",
         "weather_error": "उस स्थान का मौसम नहीं मिल सका — वर्तनी जांचें या किसी नज़दीकी बड़े शहर का नाम आज़माएं।",
         "upload_label": "पत्ती की फोटो अपलोड करें",
+        "camera_label": "फोटो लें",
+        "upload_tab": "📁 अपलोड",
+        "camera_tab": "📷 कैमरा",
         "uploaded_caption": "अपलोड की गई फोटो",
         "analyzing_eyebrow": "नमूने का विश्लेषण हो रहा है",
         "scan_line1": "दृश्य विशेषताएं निकाली जा रही हैं...",
@@ -177,6 +183,9 @@ UI_STRINGS = {
         "weather_not_configured": "കാലാവസ്ഥാ സവിശേഷത കോൺഫിഗർ ചെയ്തിട്ടില്ല — ഇത് സജീവമാക്കാൻ ആപ്പ് സീക്രട്ടുകളിൽ OpenWeatherMap API കീ ചേർക്കുക.",
         "weather_error": "ആ സ്ഥലത്തെ കാലാവസ്ഥ ലഭിച്ചില്ല — അക്ഷരവിന്യാസം പരിശോധിക്കുക അല്ലെങ്കിൽ അടുത്തുള്ള വലിയ നഗരത്തിന്റെ പേര് ശ്രമിക്കുക.",
         "upload_label": "ഇലയുടെ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
+        "camera_label": "ഫോട്ടോ എടുക്കുക",
+        "upload_tab": "📁 അപ്‌ലോഡ്",
+        "camera_tab": "📷 ക്യാമറ",
         "uploaded_caption": "അപ്‌ലോഡ് ചെയ്ത ഫോട്ടോ",
         "analyzing_eyebrow": "സാമ്പിൾ വിശകലനം ചെയ്യുന്നു",
         "scan_line1": "ദൃശ്യ സവിശേഷതകൾ എടുക്കുന്നു...",
@@ -210,6 +219,9 @@ UI_STRINGS = {
         "weather_not_configured": "ಹವಾಮಾನ ವೈಶಿಷ್ಟ್ಯ ಕಾನ್ಫಿಗರ್ ಆಗಿಲ್ಲ — ಇದನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಆ್ಯಪ್ ಸೀಕ್ರೆಟ್ಸ್‌ನಲ್ಲಿ OpenWeatherMap API ಕೀ ಸೇರಿಸಿ.",
         "weather_error": "ಆ ಸ್ಥಳದ ಹವಾಮಾನ ಸಿಗಲಿಲ್ಲ — ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.",
         "upload_label": "ಎಲೆಯ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        "camera_label": "ಫೋಟೋ ತೆಗೆಯಿರಿ",
+        "upload_tab": "📁 ಅಪ್‌ಲೋಡ್",
+        "camera_tab": "📷 ಕ್ಯಾಮೆರಾ",
         "uploaded_caption": "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಫೋಟೋ",
         "analyzing_eyebrow": "ಮಾದರಿ ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ",
         "scan_line1": "ದೃಶ್ಯ ಲಕ್ಷಣಗಳನ್ನು ಹೊರತೆಗೆಯಲಾಗುತ್ತಿದೆ...",
@@ -243,6 +255,9 @@ UI_STRINGS = {
         "weather_not_configured": "வானிலை அம்சம் கட்டமைக்கப்படவில்லை — இதை இயக்க ஆப் சீக்ரெட்டுகளில் OpenWeatherMap API கீயைச் சேர்க்கவும்.",
         "weather_error": "அந்த இடத்திற்கான வானிலை கிடைக்கவில்லை — எழுத்துப்பிழையை சரிபார்க்கவும் அல்லது அருகிலுள்ள பெரிய நகரத்தின் பெயரை முயற்சிக்கவும்.",
         "upload_label": "இலையின் புகைப்படத்தை பதிவேற்றவும்",
+        "camera_label": "புகைப்படம் எடுக்கவும்",
+        "upload_tab": "📁 பதிவேற்று",
+        "camera_tab": "📷 கேமரா",
         "uploaded_caption": "பதிவேற்றப்பட்ட புகைப்படம்",
         "analyzing_eyebrow": "மாதிரி பகுப்பாய்வு செய்யப்படுகிறது",
         "scan_line1": "காட்சி அம்சங்கள் பிரித்தெடுக்கப்படுகின்றன...",
@@ -468,6 +483,25 @@ body, [class*="css"] { font-family: 'Hanken Grotesk', sans-serif; color: var(--t
 }
 [data-testid="stFileUploader"] label p { color: var(--text-muted) !important; }
 
+/* Camera input */
+[data-testid="stCameraInput"] video, [data-testid="stCameraInput"] img {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+}
+
+/* Capture-mode tabs (upload vs camera) */
+.stTabs [data-baseweb="tab-list"] { gap: 0.4rem; }
+.stTabs [data-baseweb="tab"] {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px 10px 0 0;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+}
+.stTabs [aria-selected="true"] { color: var(--accent-2) !important; }
+
 /* Location input styling */
 .loc-wrap input {
     background: rgba(255,255,255,0.05) !important;
@@ -486,6 +520,89 @@ body, [class*="css"] { font-family: 'Hanken Grotesk', sans-serif; color: var(--t
     text-transform: uppercase; color: var(--text-muted); text-align: center;
     padding: 1.2rem 0 0.5rem 0; border-top: 1px solid var(--border); margin-top: 0.5rem;
 }
+
+/* ===========================================================================
+   WEATHER-REACTIVE BACKGROUND EFFECTS
+   Rain -> wet-glass "mirror" sheen across every glass-card
+   Sun  -> rotating light rays + warm glow behind content
+   Snow -> drifting snowfall
+   Clouds/Fog -> soft drifting fog blobs
+=========================================================================== */
+
+/* --- RAIN: turns .glass-card into a rain-streaked mirror --- */
+@keyframes mirrorSheen {
+    0%   { transform: translateX(-120%) rotate(8deg); opacity: 0; }
+    15%  { opacity: 0.55; }
+    50%  { opacity: 0.35; }
+    100% { transform: translateX(120%) rotate(8deg); opacity: 0; }
+}
+@keyframes rainFall {
+    from { transform: translateY(-10vh); }
+    to   { transform: translateY(110vh); }
+}
+.rain-mode .glass-card {
+    backdrop-filter: blur(18px) saturate(165%);
+    -webkit-backdrop-filter: blur(18px) saturate(165%);
+    background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(142,209,232,0.03) 60%);
+    border-top: 1px solid rgba(224,242,241,0.4);
+}
+.rain-mode .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 45%; height: 220%;
+    background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.22) 48%, rgba(255,255,255,0.05) 55%, transparent 70%);
+    animation: mirrorSheen 6s ease-in-out infinite;
+    pointer-events: none;
+}
+.weather-overlay { position: fixed; top:0; left:0; width:100%; height:100%;
+    overflow:hidden; pointer-events:none; z-index:-1; }
+.raindrop { position:absolute; top:-10%; width:1.5px;
+    background:linear-gradient(to bottom, transparent, var(--accent), rgba(255,255,255,0.7));
+    animation-name: rainFall; animation-timing-function: linear;
+    animation-iteration-count: infinite; opacity:0.55; }
+.lightning-flash { position:fixed; top:0; left:0; width:100%; height:100%;
+    background:#fff; opacity:0; animation: flash 7s infinite; pointer-events:none; z-index:999; }
+@keyframes flash { 0%, 95%, 100% { opacity:0; } 96% { opacity:0.5; } 97% { opacity:0; } 98% { opacity:0.28; } }
+
+/* --- SUN: rotating light rays + warm glow behind the cards --- */
+@keyframes rayRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+@keyframes sunPulse { 0%,100% { opacity:0.7; } 50% { opacity:1; } }
+.sun-rays {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 220%; height: 220%;
+    transform: translate(-50%, -50%);
+    background: repeating-conic-gradient(
+        from 0deg,
+        rgba(242,201,76,0.16) 0deg 6deg,
+        transparent 6deg 24deg
+    );
+    animation: rayRotate 60s linear infinite;
+    -webkit-mask-image: radial-gradient(circle, black 35%, transparent 70%);
+    mask-image: radial-gradient(circle, black 35%, transparent 70%);
+}
+.sun-glow {
+    position: absolute; top:-25%; right:-15%; width:65vw; height:65vw;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(242,201,76,0.32) 0%, transparent 70%);
+    animation: sunPulse 4s ease-in-out infinite;
+}
+
+/* --- SNOW --- */
+@keyframes snowFall { from { transform: translate(0, -10vh); } to { transform: translate(24px, 110vh); } }
+.snowflake { position:absolute; top:-5%; border-radius:50%; background: var(--accent);
+    opacity:0.8; animation-name: snowFall; animation-timing-function: linear;
+    animation-iteration-count: infinite; }
+
+/* --- CLOUDS / FOG --- */
+@keyframes cloudDrift { from { transform: translateX(-25vw); } to { transform: translateX(125vw); } }
+.cloud-blob { position:absolute; border-radius:50%;
+    filter: blur(30px); animation-name: cloudDrift; animation-timing-function: linear;
+    animation-iteration-count: infinite; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -550,26 +667,34 @@ def gauge_color(pct):
         return "#ffb4ab"  # error red — low
 
 
-def get_weather_theme(condition_main):
-    """Map an OpenWeatherMap 'main' condition to a color palette + background effect."""
+def get_weather_theme(condition_main, temp=None):
+    """Map an OpenWeatherMap 'main' condition (+ optional temp for a 'winter' feel)
+    to a color palette, a background effect, and a body CSS class."""
     c = (condition_main or "").lower()
     if c in ("rain", "drizzle"):
-        return {"accent": "#8ED1E8", "accent2": "#E0F2F1", "glow": "rgba(224,242,241,0.22)", "effect": "rain"}
+        return {"accent": "#8ED1E8", "accent2": "#E0F2F1", "glow": "rgba(224,242,241,0.22)",
+                "effect": "rain", "mode_class": "rain-mode"}
     if c == "thunderstorm":
-        return {"accent": "#B39DDB", "accent2": "#9575CD", "glow": "rgba(126,87,194,0.3)", "effect": "thunder"}
-    if c == "snow":
-        return {"accent": "#E0F2F1", "accent2": "#B8E6E0", "glow": "rgba(224,247,250,0.25)", "effect": "snow"}
+        return {"accent": "#B39DDB", "accent2": "#9575CD", "glow": "rgba(126,87,194,0.3)",
+                "effect": "thunder", "mode_class": "rain-mode"}
+    if c == "snow" or (temp is not None and temp <= 2):
+        return {"accent": "#E0F2F1", "accent2": "#B8E6E0", "glow": "rgba(224,247,250,0.25)",
+                "effect": "snow", "mode_class": "snow-mode"}
     if c == "clear":
-        return {"accent": "#F2C94C", "accent2": "#e9c349", "glow": "rgba(242,201,76,0.3)", "effect": "sun"}
+        return {"accent": "#F2C94C", "accent2": "#e9c349", "glow": "rgba(242,201,76,0.3)",
+                "effect": "sun", "mode_class": "sun-mode"}
     if c == "clouds":
-        return {"accent": "#B0BEC5", "accent2": "#90A4AE", "glow": "rgba(176,190,197,0.2)", "effect": "clouds"}
+        return {"accent": "#B0BEC5", "accent2": "#90A4AE", "glow": "rgba(176,190,197,0.2)",
+                "effect": "clouds", "mode_class": "cloud-mode"}
     if c in ("mist", "fog", "haze", "smoke"):
-        return {"accent": "#CFD8DC", "accent2": "#B0BEC5", "glow": "rgba(207,216,220,0.18)", "effect": "fog"}
+        return {"accent": "#CFD8DC", "accent2": "#B0BEC5", "glow": "rgba(207,216,220,0.18)",
+                "effect": "fog", "mode_class": "cloud-mode"}
     return None
 
 
 def render_weather_theme(theme):
-    """Override accent CSS variables and add an animated background effect matching the weather."""
+    """Override accent CSS variables, tag <body> with a weather mode class (used by the
+    .rain-mode mirror-sheen CSS), and add an animated background effect matching the weather."""
     if not theme:
         return
 
@@ -581,84 +706,59 @@ def render_weather_theme(theme):
         --glow: {theme['glow']};
     }}
     </style>
+    <script>
+        const body = window.parent.document.querySelector('body');
+        if (body) {{
+            body.classList.remove('rain-mode', 'snow-mode', 'sun-mode', 'cloud-mode');
+            body.classList.add('{theme['mode_class']}');
+        }}
+    </script>
     """, unsafe_allow_html=True)
 
     effect = theme["effect"]
 
     if effect in ("rain", "thunder"):
         drops = ""
-        for _ in range(28):
+        for _ in range(38):
             left = random.uniform(0, 100)
             delay = random.uniform(0, 2)
-            duration = random.uniform(0.6, 1.3)
-            height = random.uniform(40, 80)
+            duration = random.uniform(0.5, 1.2)
+            height = random.uniform(50, 95)
             drops += (f'<div class="raindrop" style="left:{left:.1f}%; height:{height:.0f}px; '
                       f'animation-delay:{delay:.2f}s; animation-duration:{duration:.2f}s;"></div>')
         flash_html = '<div class="lightning-flash"></div>' if effect == "thunder" else ""
         st.markdown(f"""
-        <style>
-        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
-            overflow:hidden; pointer-events:none; z-index:-1; }}
-        .raindrop {{ position:absolute; top:-10%; width:1px;
-            background:linear-gradient(to bottom, transparent, {theme['accent']});
-            animation-name: rainFall; animation-timing-function: linear;
-            animation-iteration-count: infinite; opacity:0.5; }}
-        @keyframes rainFall {{ from {{ transform: translateY(-10vh); }} to {{ transform: translateY(110vh); }} }}
-        .lightning-flash {{ position:fixed; top:0; left:0; width:100%; height:100%;
-            background:#fff; opacity:0; animation: flash 7s infinite; pointer-events:none; z-index:999; }}
-        @keyframes flash {{ 0%, 95%, 100% {{ opacity:0; }} 96% {{ opacity:0.5; }} 97% {{ opacity:0; }} 98% {{ opacity:0.28; }} }}
-        </style>
         <div class="weather-overlay">{drops}</div>
         {flash_html}
         """, unsafe_allow_html=True)
 
     elif effect == "snow":
         flakes = ""
-        for _ in range(22):
+        for _ in range(30):
             left = random.uniform(0, 100)
             delay = random.uniform(0, 5)
-            duration = random.uniform(4, 8)
-            size = random.uniform(3, 7)
+            duration = random.uniform(4, 9)
+            size = random.uniform(3, 8)
             flakes += (f'<div class="snowflake" style="left:{left:.1f}%; width:{size:.1f}px; height:{size:.1f}px; '
                        f'animation-delay:{delay:.2f}s; animation-duration:{duration:.2f}s;"></div>')
         st.markdown(f"""
-        <style>
-        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
-            overflow:hidden; pointer-events:none; z-index:-1; }}
-        .snowflake {{ position:absolute; top:-5%; border-radius:50%; background:{theme['accent']};
-            opacity:0.75; animation-name: snowFall; animation-timing-function: linear;
-            animation-iteration-count: infinite; }}
-        @keyframes snowFall {{ from {{ transform: translate(0, -10vh); }} to {{ transform: translate(24px, 110vh); }} }}
-        </style>
         <div class="weather-overlay">{flakes}</div>
         """, unsafe_allow_html=True)
 
     elif effect == "sun":
-        st.markdown(f"""
-        <style>
-        .weather-overlay {{ position: fixed; top:-25%; right:-15%; width:60vw; height:60vw;
-            pointer-events:none; z-index:-1; border-radius:50%;
-            background: radial-gradient(circle, {theme['glow']} 0%, transparent 70%);
-            animation: sunPulse 4s ease-in-out infinite; }}
-        @keyframes sunPulse {{ 0%,100% {{ opacity:0.75; }} 50% {{ opacity:1; }} }}
-        </style>
-        <div class="weather-overlay"></div>
+        st.markdown("""
+        <div class="weather-overlay">
+            <div class="sun-glow"></div>
+            <div class="sun-rays"></div>
+        </div>
         """, unsafe_allow_html=True)
 
     elif effect in ("clouds", "fog"):
         st.markdown(f"""
-        <style>
-        .weather-overlay {{ position: fixed; top:0; left:0; width:100%; height:100%;
-            overflow:hidden; pointer-events:none; z-index:-1; }}
-        .cloud-blob {{ position:absolute; border-radius:50%; background:{theme['glow']};
-            filter: blur(30px); animation-name: cloudDrift; animation-timing-function: linear;
-            animation-iteration-count: infinite; }}
-        @keyframes cloudDrift {{ from {{ transform: translateX(-25vw); }} to {{ transform: translateX(125vw); }} }}
-        </style>
         <div class="weather-overlay">
-            <div class="cloud-blob" style="top:8%; width:220px; height:80px; animation-duration:38s;"></div>
-            <div class="cloud-blob" style="top:28%; width:160px; height:60px; animation-duration:28s; animation-delay:-10s;"></div>
-            <div class="cloud-blob" style="top:52%; width:260px; height:90px; animation-duration:45s; animation-delay:-20s;"></div>
+            <div class="cloud-blob" style="top:8%; width:220px; height:80px; background:{theme['glow']}; animation-duration:38s;"></div>
+            <div class="cloud-blob" style="top:28%; width:160px; height:60px; background:{theme['glow']}; animation-duration:28s; animation-delay:-10s;"></div>
+            <div class="cloud-blob" style="top:52%; width:260px; height:90px; background:{theme['glow']}; animation-duration:45s; animation-delay:-20s;"></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -727,7 +827,7 @@ if city:
     else:
         weather_data = get_weather(city, api_key)
         if weather_data:
-            theme = get_weather_theme(weather_data["weather"][0]["main"])
+            theme = get_weather_theme(weather_data["weather"][0]["main"], weather_data["main"]["temp"])
             render_weather_theme(theme)
 
 # ---------------------------------------------------------------------------
@@ -816,8 +916,18 @@ with tile2:
     </div>
     """, unsafe_allow_html=True)
 
+# ---------------------------------------------------------------------------
+# Image capture — upload a file OR take a photo with the camera
+# ---------------------------------------------------------------------------
+upload_tab, camera_tab = st.tabs([T["upload_tab"], T["camera_tab"]])
 
-uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"])
+uploaded_file = None
+with upload_tab:
+    uploaded_file = st.file_uploader(T["upload_label"], type=["jpg", "jpeg", "png"], label_visibility="collapsed")
+with camera_tab:
+    camera_file = st.camera_input(T["camera_label"], label_visibility="collapsed")
+    if camera_file is not None:
+        uploaded_file = camera_file
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
