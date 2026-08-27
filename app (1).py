@@ -12,10 +12,10 @@ from recommendations import RECOMMENDATIONS
 
 # ---------------------------------------------------------------------------
 # Class names must be in the same order the model was trained on.
-# NOTE: plant_model_v5.keras outputs 55 classes, but only the original 38
-# are named below (carried over from v4). Classes 38-54 will show a
-# "not yet labeled" placeholder until the real v5 class list is added here
-# (see get_class_display_name()).
+# v5 combines the original 38-class PlantVillage set with a 2nd dataset
+# (Kaggle "Soybean Diseased Leaf Dataset") adding Orange disease variants
+# and 13 new Soybean diseases — 55 classes total, confirmed against the
+# training notebook's train_ds.class_names output.
 # ---------------------------------------------------------------------------
 CLASS_NAMES = [
     "Apple___Apple_scab",
@@ -33,7 +33,11 @@ CLASS_NAMES = [
     "Grape___Esca_(Black_Measles)",
     "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
     "Grape___healthy",
+    "Orange___Citrus_Canker",
     "Orange___Haunglongbing_(Citrus_greening)",
+    "Orange___Multiple_Diseases",
+    "Orange___Nutrient_Deficiency",
+    "Orange___healthy",
     "Peach___Bacterial_spot",
     "Peach___healthy",
     "Pepper,_bell___Bacterial_spot",
@@ -42,6 +46,19 @@ CLASS_NAMES = [
     "Potato___Late_blight",
     "Potato___healthy",
     "Raspberry___healthy",
+    "Soybean___Bacterial_Pustule",
+    "Soybean___Brown_Spot",
+    "Soybean___Crestamento",
+    "Soybean___Ferrugen",
+    "Soybean___Frogeye_Leaf_Spot",
+    "Soybean___Mosaic_Virus",
+    "Soybean___Powdery_Mildew",
+    "Soybean___Rust",
+    "Soybean___Septoria",
+    "Soybean___Southern_Blight",
+    "Soybean___Sudden_Death_Syndrome",
+    "Soybean___Target_Leaf_Spot",
+    "Soybean___Yellow_Mosaic",
     "Soybean___healthy",
     "Squash___Powdery_mildew",
     "Strawberry___Leaf_scorch",
